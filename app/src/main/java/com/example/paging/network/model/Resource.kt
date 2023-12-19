@@ -6,11 +6,3 @@ sealed class Resource<out T> {
     data object Loading : Resource<Nothing>()
     data object Failure : Resource<Nothing>()
 }
-
-
-//sealed class Resource {
-//    val data:UserListResponse = UserListResponse(100, 50, listOf<User>())
-//    class Failure : Resource()
-//    class Loading : Resource()
-//    class Success : Resource()
-//}

@@ -2,18 +2,22 @@ package com.example.paging.network
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.example.paging.network.api.RetrofitInstance
 import com.example.paging.network.model.Resource
 import com.example.paging.network.model.User
 
-class UserPagingSource(private val dataRepository: DataRepository):PagingSource<Int, User>() {
+class UserPagingSource():PagingSource<Int, User>() {
+
+    private val dataRepository: DataRepository = DataRepository(RetrofitInstance.apiService)
+
     companion object {
         private const val STARTING_PAGE_INDEX = 1
     }
 
     override fun getRefreshKey(state: PagingState<Int, User>): Int? {
-        return state.anchorPosition?.let { anchorPosition->
-            state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1) ?:
-            state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
+        return state.anchorPosition?.let { anchorPosition ->
+            state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
+                ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
         }
     }
 
@@ -28,11 +32,16 @@ class UserPagingSource(private val dataRepository: DataRepository):PagingSource<
             }
             is Resource.Success -> {
                 val userListResponse = result.data
-                LoadResult.Page(
-                    data = userListResponse.userList,
-                    prevKey = if (position == STARTING_PAGE_INDEX) null else -1,
-                    nextKey = if (userListResponse.userList.isEmpty()) null else position + 1
-                )
+
+                if (userListResponse.userList.isNotEmpty() && position <= userListResponse.totalPages) {
+                    LoadResult.Page(
+                        data = userListResponse.userList,
+                        prevKey = if (position == STARTING_PAGE_INDEX) null else position - 1,
+                        nextKey = if (position == userListResponse.totalPages) null else position + 1
+                    )
+                } else {
+                    LoadResult.Error(Exception("Invalid data"))
+                }
             }
         }
     }

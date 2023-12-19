@@ -12,6 +12,7 @@ class PagingAdapter() :
     PagingDataAdapter<User, PagingAdapter.PagingViewHolder>(diffCallback = UserListDiffCallback()) {
     class PagingViewHolder(private val binding: PagingItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
         fun bind(item: User) = with(binding) {
             tvFirstname.text = item.firstName
             tvLastname.text = item.lastName
@@ -27,7 +28,6 @@ class PagingAdapter() :
         override fun areContentsTheSame(oldItem: User, newItem: User): Boolean {
             return oldItem == newItem
         }
-
     }
 
     override fun onBindViewHolder(holder: PagingViewHolder, position: Int) {

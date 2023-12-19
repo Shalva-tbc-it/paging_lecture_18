@@ -6,7 +6,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 object RetrofitInstance {
-
     private const val BASE_URL = "https://reqres.in/api/"
 
     private val moshi: Moshi = Moshi.Builder()
@@ -18,9 +17,7 @@ object RetrofitInstance {
         .addConverterFactory(MoshiConverterFactory.create(moshi))
         .build()
 
-
     val apiService: ApiService by lazy {
         retrofit.create(ApiService::class.java)
     }
-
 }
