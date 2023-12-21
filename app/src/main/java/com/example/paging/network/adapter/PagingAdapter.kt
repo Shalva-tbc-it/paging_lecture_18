@@ -12,7 +12,6 @@ class PagingAdapter() :
     PagingDataAdapter<User, PagingAdapter.PagingViewHolder>(diffCallback = UserListDiffCallback()) {
     class PagingViewHolder(private val binding: PagingItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
         fun bind(item: User) = with(binding) {
             tvFirstname.text = item.firstName
             tvLastname.text = item.lastName

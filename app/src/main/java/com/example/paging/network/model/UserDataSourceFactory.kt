@@ -7,7 +7,7 @@ import com.example.paging.network.UserPagingSource
 class UserDataSourceFactory() {
 
     companion object {
-        const val NETWORK_PAGE_SIZE = 2
+        const val NETWORK_PAGE_SIZE = 10
     }
 
     fun getUsers() =

@@ -16,14 +16,15 @@ class UserPagingSource():PagingSource<Int, User>() {
 
     override fun getRefreshKey(state: PagingState<Int, User>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
-            state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
-                ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
+            val anchorPage = state.closestPageToPosition(anchorPosition)
+            anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
         }
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, User> {
         val position = params.key ?: STARTING_PAGE_INDEX
         return when (val result = dataRepository.getUsers(position, params.loadSize)) {
+
             is Resource.Failure -> {
                 LoadResult.Error(Exception(result.toString()))
             }
@@ -37,7 +38,7 @@ class UserPagingSource():PagingSource<Int, User>() {
                     LoadResult.Page(
                         data = userListResponse.userList,
                         prevKey = if (position == STARTING_PAGE_INDEX) null else position - 1,
-                        nextKey = if (position == userListResponse.totalPages) null else position + 1
+                        nextKey = if (userListResponse.userList.isEmpty()) null else position + 1
                     )
                 } else {
                     LoadResult.Error(Exception("Invalid data"))

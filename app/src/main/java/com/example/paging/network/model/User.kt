@@ -10,9 +10,10 @@ import kotlinx.parcelize.Parcelize
 @JsonClass(generateAdapter = true)
 data class UserListResponse(
     @Json(name = "page") val totalUsers: Int,
-    @Json(name ="total_pages") val totalPages: Int,
+    @Json(name ="total") val totalPages: Int,
     @Json(name = "data") val userList: List<User>
 ) : Parcelable
+
 @Parcelize
 @JsonClass(generateAdapter = true)
 data class User(

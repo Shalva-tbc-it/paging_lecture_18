@@ -8,14 +8,18 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 object RetrofitInstance {
     private const val BASE_URL = "https://reqres.in/api/"
 
-    private val moshi: Moshi = Moshi.Builder()
-        .addLast(KotlinJsonAdapterFactory())
-        .build()
+    private val moshi: Moshi by lazy {
+        Moshi.Builder()
+            .addLast(KotlinJsonAdapterFactory())
+            .build()
+    }
 
-    private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .addConverterFactory(MoshiConverterFactory.create(moshi))
-        .build()
+    private val retrofit: Retrofit by lazy {
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .build()
+    }
 
     val apiService: ApiService by lazy {
         retrofit.create(ApiService::class.java)
