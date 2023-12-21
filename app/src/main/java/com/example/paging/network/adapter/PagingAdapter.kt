@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.paging.databinding.PagingItemBinding
 import com.example.paging.network.model.User
 
@@ -16,6 +17,9 @@ class PagingAdapter() :
             tvFirstname.text = item.firstName
             tvLastname.text = item.lastName
             tvEmail.text = item.email
+            Glide.with(root.context)
+                .load(item.avatar)
+                .into(imgAvatar)
         }
     }
 

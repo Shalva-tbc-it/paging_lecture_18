@@ -2,7 +2,9 @@ package com.example.paging.network.model
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import com.example.paging.network.DataRepository
 import com.example.paging.network.UserPagingSource
+import com.example.paging.network.api.RetrofitInstance
 
 class UserDataSourceFactory() {
 
@@ -16,6 +18,6 @@ class UserDataSourceFactory() {
                 pageSize = NETWORK_PAGE_SIZE,
                 enablePlaceholders = false
             ),
-            pagingSourceFactory = { UserPagingSource() }).flow
+            pagingSourceFactory = { UserPagingSource(DataRepository(RetrofitInstance.apiService)) }).flow
 
 }

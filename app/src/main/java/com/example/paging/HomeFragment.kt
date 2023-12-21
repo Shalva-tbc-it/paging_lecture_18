@@ -19,10 +19,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         bind()
     }
 
-    override fun clickListener() {
-
-    }
-
     private fun setAdapter() {
         pagingAdapter = PagingAdapter()
         binding.recyclerViewPaging.apply {

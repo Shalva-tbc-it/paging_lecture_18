@@ -7,5 +7,8 @@ import retrofit2.http.Query
 
 interface ApiService {
     @GET("users")
-    suspend fun getUsers(@Query("page") page: Int, @Query("total") loadSize: Int): UserListResponse
+    suspend fun getUsers(
+        @Query("page") page: Int,
+        @Query("total_pages") loadSize: Int
+    ): UserListResponse
 }

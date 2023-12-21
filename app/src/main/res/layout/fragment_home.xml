@@ -6,17 +6,9 @@
     android:orientation="vertical"
     tools:context=".HomeFragment">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:text="HomePage"
-        android:textSize="30sp"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewPaging"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
 
 </androidx.appcompat.widget.LinearLayoutCompat>
